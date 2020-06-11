@@ -134,8 +134,8 @@ namespace eosiosystem {
      check(st != stable.end(), "no ORE token stats found");
 
      const auto ct = current_time_point();
-     //check( ct - itr->last_claimed > microseconds(useconds_per_30d), "already claimed rewards within past 30 days" );
-     check( ct - itr->last_claimed > microseconds(6000000), "already claimed rewards within past 30 days" );
+     check( ct - itr->last_claimed > microseconds(useconds_per_30d), "already claimed rewards within past 30 days" );
+     // for testing check( ct - itr->last_claimed > microseconds(6000000), "already claimed rewards within past 30 days" );
 
      allocate_inflation();
 
@@ -178,8 +178,8 @@ namespace eosiosystem {
 
       const auto ct = current_time_point();
 
-      //check( ct - prod.last_claim_time > microseconds(useconds_per_day), "already claimed rewards within past day" );
-      check( ct - prod.last_claim_time > microseconds(6000000), "already claimed rewards within past day" );
+      check( ct - prod.last_claim_time > microseconds(useconds_per_day), "already claimed rewards within past day" );
+      // for testing check( ct - prod.last_claim_time > microseconds(6000000), "already claimed rewards within past day" );
 
       allocate_inflation();
 

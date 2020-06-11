@@ -26,6 +26,7 @@ namespace eosio {
 
           static constexpr symbol ore_symbol     = symbol(symbol_code("ORE"), 4);
           static constexpr name ore_lock{"lock.ore"_n};
+          static constexpr name ore_system{"system.ore"_n};
 
            struct [[eosio::table]] reserve {
               asset          staked;
@@ -40,8 +41,16 @@ namespace eosio {
               uint64_t primary_key()const { return ore_staked.symbol.code().raw(); }
            };
 
+           struct [[eosio::table]] stake_info {
+              asset    amount;
+              name     staker;
+
+              uint64_t primary_key()const { return amount.symbol.code().raw(); }
+           };
+
           typedef eosio::multi_index< "reserves"_n, reserve > reserves;
           typedef eosio::multi_index< "stakestats"_n, staking_stats > stakestats;
+          typedef eosio::multi_index< "stakeinfo"_n, stake_info > stakeinfo;
 //***
 
          /**
@@ -98,11 +107,13 @@ namespace eosio {
 
          [[eosio::action]]
          void stake( const name&    account,
+                     const name&    receiver,
                       const asset&   quantity,
                       const string&  memo );
 
          [[eosio::action]]
          void unstake( const name&    account,
+                      const name&    receiver,
                       const asset&   quantity,
                       const string&  memo );
 
@@ -111,6 +122,11 @@ namespace eosio {
 
          [[eosio::action]]
          void updateclaim(const name& owner);
+
+         [[eosio::action]]
+         void chngstaker( const name&   oldstaker,
+                        const name&   newstaker,
+                        const name&  account);
          
 //***
 
@@ -175,11 +191,6 @@ namespace eosio {
          }
 //***
 
-         void transfer_ore_system( const name&    from,
-               const name&    to,
-               const asset&   quantity,
-               const string&  memo);
-
          using create_action = eosio::action_wrapper<"create"_n, &token::create>;
          using issue_action = eosio::action_wrapper<"issue"_n, &token::issue>;
          using retire_action = eosio::action_wrapper<"retire"_n, &token::retire>;
@@ -209,13 +220,22 @@ namespace eosio {
          typedef eosio::multi_index< "stat"_n, currency_stats > stats;
          
          void sub_balance( const name& owner, const asset& value );
-         void sub_balance_payram( const name& owner, const asset& value );
+         void sub_balance_same_payer( const name& owner, const asset& value );
          void add_balance( const name& owner, const asset& value, const name& ram_payer );
 
 //*** Added GBT
 
-         void sub_stake( const name& account, const asset& value );
-         void add_stake( const name& account, const asset& value );
+         void sub_stake( const name& account, const name& receiver, const asset& value );
+         void add_stake( const name& account, const name& receiver, const asset& value );
+
+         void add_stake_stats( const asset& value );
+         void sub_stake_stats( const asset& value );
+
+         void add_stake_reserve( const name& account, const asset& value );
+         void sub_stake_reserve( const name& account, const asset& value );
+
+         void add_stake_info( const name& account, const name& receiver, const asset& value );
+         void sub_stake_info( const name& account, const name& receiver, const asset& value );
 
 //***
 
