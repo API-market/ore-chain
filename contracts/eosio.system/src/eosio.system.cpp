@@ -67,7 +67,7 @@ namespace eosiosystem {
    void system_contract::setram( uint64_t max_ram_size ) {
       require_auth( get_self() );
 
-      check( _gstate.max_ram_size < max_ram_size, "ram may only be increased" ); /// decreasing ram might result market maker issues
+      //check( _gstate.max_ram_size < max_ram_size, "ram may only be increased" ); /// decreasing ram might result market maker issues
       check( max_ram_size < 1024ll*1024*1024*1024*1024, "ram size is unrealistic" );
       check( max_ram_size > _gstate.total_ram_bytes_reserved, "attempt to set max below reserved" );
 
@@ -308,6 +308,18 @@ namespace eosiosystem {
       _gstate4.inflation_pay_factor = inflation_pay_factor;
       _gstate4.votepay_factor       = votepay_factor;
       _global4.set( _gstate4, get_self() );
+   }
+
+   void system_contract::upgraderam() {
+      require_auth(get_self());
+      const uint64_t new_max_ram_size = _gstate.max_ram_size * 1.2;
+      setram(new_max_ram_size);
+      action(
+         permission_level{get_self(), "active"_n},
+         "system.ore"_n,
+         name("pricecut"),
+         std::make_tuple())
+         .send();
    }
 
    /**
