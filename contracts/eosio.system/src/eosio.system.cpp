@@ -66,8 +66,10 @@ namespace eosiosystem {
 
    void system_contract::setram( uint64_t max_ram_size ) {
       require_auth( get_self() );
-
-      //check( _gstate.max_ram_size < max_ram_size, "ram may only be increased" ); /// decreasing ram might result market maker issues
+      if( _gstate.max_ram_size >= max_ram_size ) {
+         check(_gstate.max_ram_size == 64ll*1024 * 1024 * 1024, "ram can only be decreased from default state");
+         check(eosio::time_point_sec(current_time_point()) < eosio::time_point_sec(1606780800), "ram can not be decreased after 12/1/2020-00:00 GMT");
+      }
       check( max_ram_size < 1024ll*1024*1024*1024*1024, "ram size is unrealistic" );
       check( max_ram_size > _gstate.total_ram_bytes_reserved, "attempt to set max below reserved" );
 
