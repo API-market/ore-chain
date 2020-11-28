@@ -1,4 +1,5 @@
 #include <eosio.system/eosio.system.hpp>
+#include <eosio.system/ore.system.hpp>
 #include <eosio.token/eosio.token.hpp>
 
 #include <eosio/crypto.hpp>
@@ -314,13 +315,31 @@ namespace eosiosystem {
 
    void system_contract::upgraderam() {
       require_auth(get_self());
-      const uint64_t new_max_ram_size = _gstate.max_ram_size * 1.2;
+
+      oresystem::pricetable ptable("system.ore"_n, "system.ore"_n.value);
+      auto priceitr = ptable.find(name("minimumaccnt").value);
+      check(priceitr != ptable.end(), "Problem with reading pricetable");
+
+
+      uint64_t new_max_ram_size;
+      asset new_price = priceitr->price;
+      new_max_ram_size = 2 * _gstate.max_ram_size;
+      if(_gstate.max_ram_size < 1024ll*1024 * 1024 * 1024) {
+         new_price.amount = (log2(1024) - log2(new_max_ram_size / (1024 * 1024 * 1024)) + 4 ) * 10000;  // new_price.amount - 1000;
+      } else {
+         asset supply = token::get_supply("eosio.token"_n, symbol_code("ORE"));
+         uint64_t max_account_by_ram = (uint64_t)(new_max_ram_size / 4070);
+         new_price.amount = (uint64_t)(supply.amount / max_account_by_ram);
+      }
+
+
       setram(new_max_ram_size);
+
       action(
-         permission_level{get_self(), "active"_n},
+         permission_level{"system.ore"_n, "active"_n},
          "system.ore"_n,
-         name("pricecut"),
-         std::make_tuple())
+         name("setprice"),
+         std::make_tuple( name("minimumaccnt").value, new_price ))
          .send();
    }
 
