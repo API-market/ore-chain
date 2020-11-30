@@ -313,28 +313,34 @@ namespace eosiosystem {
       _global4.set( _gstate4, get_self() );
    }
 
+   /** To be called when 50% Network Utilization is achieved
+    *  Expands maximum ram capacity multiplying by 2 and updates account prices depending on phase
+    *  Early Phase (ram capacity < 1024 GiB):
+    *    Decrease minimum account price by 1.0000 ORE
+    *  Normal Phase (ram capacity >= 1024 GiB):
+    *    Decrease price according to ram capacity and token supply */ 
    void system_contract::upgraderam() {
       require_auth(get_self());
 
+      // read from system.ore pricetable
       oresystem::pricetable ptable("system.ore"_n, "system.ore"_n.value);
       auto priceitr = ptable.find(name("minimumaccnt").value);
       check(priceitr != ptable.end(), "Problem with reading pricetable");
 
-
       uint64_t new_max_ram_size;
       asset new_price = priceitr->price;
       new_max_ram_size = 2 * _gstate.max_ram_size;
-      if(_gstate.max_ram_size < 1024ll*1024 * 1024 * 1024) {
+      // Early Phase price decrease
+      if(_gstate.max_ram_size < normal_phase_ram_threshold) {
          new_price.amount = (log2(1024) - log2(new_max_ram_size / (1024 * 1024 * 1024)) + 4 ) * 10000;  // new_price.amount - 1000;
-      } else {
+      } 
+      // Normal Phase price decrease
+      else {
          asset supply = token::get_supply("eosio.token"_n, symbol_code("ORE"));
          uint64_t max_account_by_ram = (uint64_t)(new_max_ram_size / 4070);
          new_price.amount = (uint64_t)(supply.amount / max_account_by_ram);
       }
-
-
       setram(new_max_ram_size);
-
       action(
          permission_level{"system.ore"_n, "active"_n},
          "system.ore"_n,

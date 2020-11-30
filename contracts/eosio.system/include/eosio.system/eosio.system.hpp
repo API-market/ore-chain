@@ -83,6 +83,8 @@ namespace eosiosystem {
    static constexpr int64_t  default_inflation_pay_factor  = 20000;   // producers pay share = 10000 / 20000 = 50% of the inflation
    static constexpr int64_t  default_votepay_factor        = 10000;   // per-block pay share = 10000 / 10000 = 100% of the producer pay
 
+   static constexpr int64_t  normal_phase_ram_threshold    = 1024ll * 1024 * 1024 * 1024;   // 1024 GiB
+
    /**
     * eosio.system contract defines the structures and actions needed for blockchain's core functionality.
     * - Users can stake tokens for CPU and Network bandwidth, and then vote for producers or
