@@ -100,14 +100,18 @@ namespace eosio
       add_balance(to, quantity, payer);
    }
 
-   //*** Added GBT
+   /** 
+    * Called by system.ore when a user creates an account
+    * OR upgrades a tier
+    * Stakers gets rewarded from inflation just like producers 
+    * and can claim rewards one per month
+   */
    void token::stake(const name &account,
                      const name &receiver,
                      const asset &quantity,
                      const string &memo)
    {
       require_auth(ore_system);
-      //require_auth(account);
       check(is_account(account), "account does not exist");
       auto sym = quantity.symbol.code();
       stats statstable(get_self(), sym.raw());
@@ -122,6 +126,11 @@ namespace eosio
       add_stake(account, receiver, quantity);
    }
 
+   /** 
+    * Called by system.ore when a staker downgrades a tier
+    * Stakers gets rewarded from inflation just like producers 
+    * and can claim rewards one per month
+   */
    void token::unstake(const name &account,
                        const name &receiver,
                        const asset &quantity,
@@ -142,6 +151,10 @@ namespace eosio
       add_balance(account, quantity, account);
    }
 
+   /** 
+    * Called by system.ore when a previously staked account changes staker
+    * Old staker gets full refund and new staker stakes the same amount
+   */
    void token::chngstaker( const name &oldstaker,
                           const name &newstaker,
                           const name &account)
