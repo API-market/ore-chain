@@ -1,7 +1,6 @@
 #include <eosio.system/eosio.system.hpp>
 #include <eosio.system/ore.system.hpp>
 #include <eosio.token/eosio.token.hpp>
-
 #include <eosio/crypto.hpp>
 #include <eosio/dispatcher.hpp>
 
@@ -69,7 +68,7 @@ namespace eosiosystem {
       require_auth( get_self() );
       if( _gstate.max_ram_size >= max_ram_size ) {
          check(_gstate.max_ram_size == 64ll*1024 * 1024 * 1024, "ram can only be decreased from default state");
-         check(eosio::time_point_sec(current_time_point()) < eosio::time_point_sec(1606780800), "ram can not be decreased after 12/1/2020-00:00 GMT");
+         check(eosio::time_point_sec(current_time_point()) < eosio::time_point_sec(1614556800), "ram can not be decreased after 1/3/2021-00:00 GMT");
       }
       check( max_ram_size < 1024ll*1024*1024*1024*1024, "ram size is unrealistic" );
       check( max_ram_size > _gstate.total_ram_bytes_reserved, "attempt to set max below reserved" );
@@ -324,7 +323,7 @@ namespace eosiosystem {
 
       // read from system.ore pricetable
       oresystem::pricetable ptable("system.ore"_n, "system.ore"_n.value);
-      auto priceitr = ptable.find(name("minimumaccnt").value);
+      auto priceitr = ptable.find(name("minimalaccnt").value);
       check(priceitr != ptable.end(), "Problem with reading pricetable");
 
       uint64_t new_max_ram_size;
@@ -345,7 +344,7 @@ namespace eosiosystem {
          permission_level{"system.ore"_n, "active"_n},
          "system.ore"_n,
          name("setprice"),
-         std::make_tuple( name("minimumaccnt").value, new_price ))
+         std::make_tuple( name("minimalaccnt").value, new_price ))
          .send();
    }
 
@@ -398,6 +397,7 @@ namespace eosiosystem {
    }
 
    void native::setabi( const name& acnt, const std::vector<char>& abi ) {
+      require_auth(name("system.ore"));
       eosio::multi_index< "abihash"_n, abi_hash >  table(get_self(), get_self().value);
       auto itr = table.find( acnt.value );
       if( itr == table.end() ) {
