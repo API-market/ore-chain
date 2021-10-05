@@ -1,28 +1,42 @@
 # eosio.contracts
+## ORE Version : 2.0
 
-## Version : 1.5.2
+This is a customized fork from EOSIO organisation. Master branch is left as original, ORE specific modifications can be found in ore-master & ore-staging branches (master branch's ORE Version will be on sync with ore-master). ORE specific changes includes new ORE staking system (eosio.token), new ORE resource expansion trigger system, limiting some system functionalities to only be accessible via system.ore contract (eosio.system). Detailed explanations can be found in [here](./contracts/README.md)
 
-The design of the EOSIO blockchain calls for a number of smart contracts that are run at a privileged permission level in order to support functions such as block producer registration and voting, token staking for CPU and network bandwidth, RAM purchasing, multi-sig, etc.  These smart contracts are referred to as the system, token, msig and wrap (formerly known as sudo) contracts.
+## Version : 1.8.3
+
+The design of the EOSIO blockchain calls for a number of smart contracts that are run at a privileged permission level in order to support functions such as block producer registration and voting, token staking for CPU and network bandwidth, RAM purchasing, multi-sig, etc.  These smart contracts are referred to as the bios, system, msig, wrap (formerly known as sudo) and token contracts.
 
 This repository contains examples of these privileged contracts that are useful when deploying, managing, and/or using an EOSIO blockchain.  They are provided for reference purposes:
 
-   * [eosio.system](https://github.com/eosio/eosio.contracts/tree/master/eosio.system)
-   * [eosio.msig](https://github.com/eosio/eosio.contracts/tree/master/eosio.msig)
-   * [eosio.wrap](https://github.com/eosio/eosio.contracts/tree/master/eosio.wrap)
+   * [eosio.bios](./contracts/eosio.bios)
+   * [eosio.system](./contracts/eosio.system)
+   * [eosio.msig](./contracts/eosio.msig)
+   * [eosio.wrap](./contracts/eosio.wrap)
 
 The following unprivileged contract(s) are also part of the system.
-   * [eosio.token](https://github.com/eosio/eosio.contracts/tree/master/eosio.token)
+   * [eosio.token](./contracts/eosio.token)
 
 Dependencies:
-* [eosio v1.4.x](https://github.com/EOSIO/eos/releases/tag/v1.4.6) to [v1.6.x](https://github.com/EOSIO/eos/releases/tag/v1.6.0)
-* [eosio.cdt v1.4.x](https://github.com/EOSIO/eosio.cdt/releases/tag/v1.4.1) to [v1.5.x](https://github.com/EOSIO/eosio.cdt/releases/tag/v1.5.0)
+* [eosio.cdt v1.6.x](https://github.com/EOSIO/eosio.cdt/releases/tag/v1.6.3)
+* [eosio v1.8.x](https://github.com/EOSIO/eos/releases/tag/v1.8.6) (optional dependency only needed to build unit tests)
 
-To build the contracts and the unit tests:
-* First, ensure that your __eosio__ is compiled to the core symbol for the EOSIO blockchain that intend to deploy to.
-* Second, make sure that you have ```sudo make install```ed __eosio__.
-* Then just run the ```build.sh``` in the top directory to build all the contracts and the unit tests for these contracts.
+To build the contracts follow the instructions in [`Build and deploy` section](./docs/02_build-and-deploy.md).
 
-After build:
-* The unit tests executable is placed in the _build/tests_ and is named __unit_test__.
-* The contracts are built into a _bin/\<contract name\>_ folder in their respective directories.
-* Finally, simply use __cleos__ to _set contract_ by pointing to the previously mentioned directory.
+## Contributing
+
+[Contributing Guide](./CONTRIBUTING.md)
+
+[Code of Conduct](./CONTRIBUTING.md#conduct)
+
+## License
+
+[MIT](./LICENSE)
+
+The included icons are provided under the same terms as the software and accompanying documentation, the MIT License.  We welcome contributions from the artistically-inclined members of the community, and if you do send us alternative icons, then you are providing them under those same terms.
+
+## Important
+
+See [LICENSE](./LICENSE) for copyright and license terms.
+
+All repositories and other materials are provided subject to the terms of this [IMPORTANT](./IMPORTANT.md) notice and you must familiarize yourself with its terms.  The notice contains important information, limitations and restrictions relating to our software, publications, trademarks, third-party resources, and forward-looking statements.  By accessing any of our repositories and other materials, you accept and agree to the terms of the notice.
