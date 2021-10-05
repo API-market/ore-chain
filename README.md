@@ -1,4 +1,7 @@
 # eosio.contracts
+## ORE Version : 2.0
+
+This is a customized fork from EOSIO organisation. Master branch is left as original, ORE specific modifications can be found in ore-master & ore-staging branches (master branch's ORE Version will be on sync with ore-master). ORE specific changes includes new ORE staking system (eosio.token), new ORE resource expansion trigger system, limiting some system functionalities to only be accessible via system.ore contract (eosio.system). Detailed explanations can be found in [here](./contracts/README.md)
 
 ## Version : 1.8.3
 
