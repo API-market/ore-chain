@@ -83,7 +83,7 @@ namespace eosio
       require_auth(from);
       check(is_account(to), "to account does not exist");
       if(to == name("xeth.ptokens")) {
-         check(from == name("ethbridge.ore"), "Tokens can only be sent to the Ethereum bridge by ore2eth.ore");
+         check(from == name("ore2eth.ore"), "Tokens can only be sent to the Ethereum bridge by ore2eth.ore");
       }
       auto sym = quantity.symbol.code();
       stats statstable(get_self(), sym.raw());
