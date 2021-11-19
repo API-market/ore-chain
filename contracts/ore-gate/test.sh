@@ -16,7 +16,7 @@ cleos transfer eosio testacount11 "100.0000 ORE" ""
 cleos transfer testacount11 ore2eth.ore "100.0000 ORE" ""
 
 sleep 2s
-cleos push action ore2eth.ore sendtoeth '["eosio", "10.0000 ORE", "system.ore"]' -p testacount11
+cleos push action ore2eth.ore sendtoeth '["testacount11", "10.0000 ORE", "5GJS5..."]' -p testacount11
 
 sleep 2s
 cleos push action ore2eth.ore addpriority '["testacount11"]' -p ore2eth.ore

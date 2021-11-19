@@ -93,7 +93,7 @@ public:
     double unlockRatio = unlock_ratio(sender);
     const int64_t totalUnlocked = qacct->total_locked.amount * unlockRatio;
     const int64_t claimable = totalUnlocked - qacct->total_sent.amount;
-    check(quantity.amount <= claimable, "Quantity can't be more than claimable amount: " + asset{ claimable, quantity.symbol }.to_string());
+    check(quantity.amount <= claimable, "Quantity can't be more than unlocked amount: " + asset{ claimable, quantity.symbol }.to_string());
 
     qtable.modify(qacct, get_self(), [&](queue_info& queue) {
       queue.total_sent += quantity;
@@ -119,7 +119,7 @@ public:
     const int64_t unrefundableLocked = qacct->total_sent.amount / unlockRatio;
     const int64_t refundable = qacct->total_locked.amount - unrefundableLocked;
 
-    check(quantity.amount <= refundable, "Quantity can't be more than refundable amount: " + asset{ refundable, quantity.symbol }.to_string());
+    check(quantity.amount <= refundable, "Quantity can't be more than reclaimable amount: " + asset{ refundable, quantity.symbol }.to_string());
 
     qtable.modify(qacct, get_self(), [&](queue_info& queue) {
       queue.total_locked -= quantity;
