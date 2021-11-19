@@ -1,0 +1,127 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [],
+    "structs": [
+        {
+            "name": "addpriority",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "priority_list",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "queue_info",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "total_sent",
+                    "type": "asset"
+                },
+                {
+                    "name": "total_locked",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "reclaim",
+            "base": "",
+            "fields": [
+                {
+                    "name": "sender",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "rmvpriority",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "sendtoeth",
+            "base": "",
+            "fields": [
+                {
+                    "name": "sender",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "receiver",
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "addpriority",
+            "type": "addpriority",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "reclaim",
+            "type": "reclaim",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "rmvpriority",
+            "type": "rmvpriority",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "sendtoeth",
+            "type": "sendtoeth",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "priority",
+            "type": "priority_list",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "queue",
+            "type": "queue_info",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": []
+}
