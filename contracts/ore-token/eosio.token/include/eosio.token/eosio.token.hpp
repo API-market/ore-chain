@@ -48,9 +48,29 @@ namespace eosio {
               uint64_t primary_key()const { return amount.symbol.code().raw(); }
            };
 
+         struct vesting_info {
+            eosio::asset   claimed;
+            eosio::asset   locked;
+            time_point     start_time;
+            time_point     end_time;
+         };
+
+         /*
+         * 
+         */
+         struct [[eosio::table, eosio::contract("eosio.token")]] vesting_acct_info {
+            eosio::name                account;
+            std::vector<vesting_info>  vesting;
+            eosio::asset               total_claimed;
+            eosio::asset               total_locked;
+
+            uint64_t primary_key() const { return account.value; }
+         };
+
           typedef eosio::multi_index< "reserves"_n, reserve > reserves;
           typedef eosio::multi_index< "stakestats"_n, staking_stats > stakestats;
           typedef eosio::multi_index< "stakeinfo"_n, stake_info > stakeinfo;
+          typedef eosio::multi_index< "vesting"_n, vesting_acct_info> vestinginfo;
 //***
 
          /**
@@ -129,7 +149,38 @@ namespace eosio {
                         const name&  account);
          
 //***
+         /**
+          * Add account to the vesting schedule.
+          * 
+          * @param acct - the account to be added
+          * @param quantity - the initial number of locked tokens
+          * @param start - the start time of the vesting period
+          * @param end - the end time of the vesting period
+          * 
+          * @pre `acct` exists
+          * @pre `quantity` has a symbol of ORE
+          * @pre `end` is later than `start`
+          * @pre `acct` has an ORE balance of greater than or equal to `quantity`
+          * 
+          * @post `quantity` tokens will start to unlock at `start` time and unlock every second until `end`
+          */
+         [[eosio::action]]
+         void addvestacct(const name&  acct, 
+                          const asset& quantity,
+                          const time_point& start,
+                          const time_point& end);
 
+         /**
+          * Remove account from the vesting schedule
+          * 
+          * @param acct - the account to remove
+          * @param index - vesting information index
+          * 
+          * @pre `acct` is in the vesting schedule
+          * @pre `index` is less than the vector's size
+          */
+         [[eosio::action]]
+         void rmvestacct(const name& acct, uint64_t index);
 
          /**
           * Allows `ram_payer` to create an account `owner` with zero balance for
@@ -201,6 +252,8 @@ namespace eosio {
          using setstaked_action = eosio::action_wrapper<"setstaked"_n, &token::setstaked>;
          using updateclaim_action = eosio::action_wrapper<"updateclaim"_n, &token::updateclaim>;
          using close_action = eosio::action_wrapper<"close"_n, &token::close>;
+         using addvest_action = eosio::action_wrapper<"addvestacct"_n, &token::addvestacct>;
+         using rmvest_action = eosio::action_wrapper<"rmvestacct"_n, &token::rmvestacct>;
       private:
          struct [[eosio::table]] account {
             asset       balance;
@@ -238,7 +291,7 @@ namespace eosio {
          void sub_stake_info( const name& account, const name& receiver, const asset& value );
 
 //***
-
+         void check_vesting_info(const name& account, const asset& value);
    };
 
 }
