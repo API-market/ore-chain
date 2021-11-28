@@ -4,3 +4,9 @@
 **/data/state
 **/data/nodeos.log
 **/data/walletpw.txt
+.data.txt
+*-input*.txt
+*-output*.txt
+!*example*
+**/build/
+.DS_Store
