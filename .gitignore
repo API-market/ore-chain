@@ -8,5 +8,5 @@
 *-input*.txt
 *-output*.txt
 !*example*
-**/build/
+contracts/*/build/
 .DS_Store
