@@ -82,9 +82,6 @@ namespace eosio
       check(from != to, "cannot transfer to self");
       require_auth(from);
       check(is_account(to), "to account does not exist");
-      if(to == name("xeth.ptokens")) {
-         check(from == name("ore2eth.ore"), "Tokens can only be sent to the Ethereum bridge by ore2eth.ore");
-      }
       // check if the account is vesting
       check_vesting_info(from, quantity);
 
