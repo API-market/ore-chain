@@ -18,3 +18,9 @@ Then to deploy vesting enabled eosio.token contract under vesting directory:
 ## Requires an unlocked wallet that containts active@eosio.token key
 python3 addvesting.sh
 ```
+
+## Calculate Vesting
+- Run:
+```shell
+ts-node calculateVesting.ts accountname
+```
