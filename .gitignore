@@ -1,0 +1,14 @@
+**/data/blocks
+**/data/p2p
+**/data/snapshots
+**/data/state
+**/data/nodeos.log
+**/data/walletpw.txt
+.data.txt
+*-input*.txt
+*-output*.txt
+!*example*
+contracts/*/build/
+.DS_Store
+.env
+node_modules

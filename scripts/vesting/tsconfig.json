@@ -1,0 +1,45 @@
+{
+    "compilerOptions": {
+      "allowJs": true,
+      "alwaysStrict": false,
+      "downlevelIteration": true,
+      "experimentalDecorators": true,
+      "lib": [
+        "dom",
+        "esnext",
+      ],
+      "module": "CommonJS",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "noImplicitAny": true,
+      "outDir": "dist",
+      "sourceMap": true,
+      "target": "es5",
+      "rootDir": "./",
+      "baseUrl": "./",
+      "paths": {
+        "*" : ["src/@customTypes/*"]
+      },
+      "forceConsistentCasingInFileNames": true,
+      // to match webpack resolution
+      "resolveJsonModule": true,
+      // requirement for babel
+      // "isolatedModules": true,
+      "jsx": "preserve",
+      "skipLibCheck": true
+    },
+    "exclude": [
+      "build",
+      "config",
+      "dist",
+      "node_modules",
+    ],
+    "include": [
+      "./**/*.js",
+      "./**/*.jsx",
+      "./**/*.ts",
+      "./**/*.tsx"
+    ]
+  }
+  

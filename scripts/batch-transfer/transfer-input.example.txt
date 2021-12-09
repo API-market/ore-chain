@@ -1,0 +1,2 @@
+{"fromAccount":"payoraccount","toAccount":"vestaccount1","amount":"10000.0000 ORE"}
+{"fromAccount":"payoraccount","toAccount":"vestaccount2","amount":"10000.0000 ORE"}
