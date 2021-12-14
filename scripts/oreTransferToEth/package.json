@@ -1,0 +1,33 @@
+{
+  "name": "ore-eth-token-vest",
+  "version": "1.2.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "compile-ethmain": "hardhat compile --config hardhat.mainnet.config.js",
+    "hardhat": "hardhat",
+    "test": "hardhat test",
+    "fork": "hardhat node --fork https://mainnet.infura.io/v3/45c1c2a9fd2f4028a9438fe8c0ba65b4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-etherscan": "^2.1.6",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/hardhat-upgrades": "^1.10.0",
+    "bluebird": "^3.7.2",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.3.0",
+    "ethers": "^5.4.7",
+    "hardhat": "^2.6.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts-upgradeable": "^3.4.1",
+    "@openzeppelin/test-helpers": "^0.5.10",
+    "@openzeppelin/truffle-upgrades": "^1.5.0",
+    "ramda": "^0.27.1"
+  }
+}
