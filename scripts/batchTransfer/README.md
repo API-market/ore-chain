@@ -13,4 +13,4 @@
 Transfer Tokens:
 
     - Populate transfer-input.txt (see example)
-    - python3 transfer.py
+    - python3 transfer.py "https://ore.openrights.exchange"

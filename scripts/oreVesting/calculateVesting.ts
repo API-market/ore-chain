@@ -6,9 +6,11 @@ dotenv.config();
 
 import { argv } from 'process';
 
+const url = argv[3] || 'https://ore.openrights.exchange'
+
 const fetch = require('node-fetch');
 const signatureProvider = new JsSignatureProvider([]);
-const rpc = new JsonRpc('https://ore.openrights.exchange/', { fetch }); //required to read blockchain state
+const rpc = new JsonRpc(url, { fetch }); //required to read blockchain state
 const api = new Api({ rpc, signatureProvider }); //required to submit transactions
 
 async function main() {
@@ -22,6 +24,7 @@ async function main() {
     scope: 'eosio.token',          // Account that owns the data
     table: 'vesting',          // Table name
     lower_bound: accountName,     // Table primary key value
+    upper_bound: accountName,     // Table primary key value
     limit: 1,                   // Here we limit to 1 to get only the single row with primary key equal to 'testacc'
     reverse: false,             // Optional: Get reversed data
     show_payer: false,          // Optional: Show ram payer

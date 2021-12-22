@@ -16,11 +16,11 @@ Then to deploy vesting enabled eosio.token contract under vesting directory:
 - Run:
 ```shell
 ## Requires an unlocked wallet that containts active@eosio.token key
-python3 addvesting.sh
+python3 addvesting.py "https://ore.openrights.exchange"
 ```
 
 ## Calculate Vesting
 - Run:
 ```shell
-ts-node calculateVesting.ts accountname
+ts-node calculateVesting.ts accountname "https://ore.openrights.exchange"
 ```
