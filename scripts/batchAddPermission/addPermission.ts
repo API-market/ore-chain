@@ -4,8 +4,10 @@ import {
   asyncForEach,
   isNullOrEmpty,
 } from "@open-rights-exchange/chainjs/dist/helpers";
-import dotenv from "dotenv";
 import { ConfirmType } from "@open-rights-exchange/chainjs/dist/models";
+
+const dotenv = require('dotenv')
+
 dotenv.config();
 
 const { FUNDER_ACCOUNT_PRIVATE_KEY, VESTING_PRIVATE_KEY, NETWORK_TYPE } =
@@ -37,7 +39,6 @@ const firstAuthAction = {
 
 async function run() {
   await eosChain.connect();
-  const transaction = await eosChain.new.Transaction();
 
   const lines = fs
     .readFileSync("addPermission-input.txt", "utf8")
@@ -112,30 +113,32 @@ async function run() {
     }
 
     try {
+      const transaction = await eosChain.new.Transaction();
       await transaction.setTransaction(actions);
       await transaction.prepareToBeSigned();
       await transaction.validate();
       await transaction.sign([FUNDER_ACCOUNT_PRIVATE_KEY, VESTING_PRIVATE_KEY]);
-      console.log('missing sig: ', transaction.missingSignatures)
-      const response = await transaction.send(ConfirmType.After001);
+      const response = await transaction.send();
+      await sleep(5);
       console.log("TxResonse: ", response);
+      // save output JSON
+      const DBRecord = {
+        accountName: accountNameToLink,
+        accountType: "native",
+        chainNetwork: NETWORK_TYPE,
+        permissions: [
+          {
+            permissionName: permission, // always this permission name
+            publicKey: activeKey,
+          },
+        ],
+      };
+      fs.writeFileSync(`${accountName}.txt`, JSON.stringify(DBRecord, null, 2));
     } catch (err) {
       console.log("problem with transaction: ", err);
     }
 
-    const DBRecord = {
-      accountName: accountNameToLink,
-      accountType: "native",
-      chainNetwork: NETWORK_TYPE,
-      permissions: [
-        {
-          permissionName: permission, // always this permission name
-          publicKey: activeKey,
-        },
-      ],
-    };
 
-    fs.writeFileSync(`${accountName}.txt`, JSON.stringify(DBRecord, null, 2));
   });
 }
 
@@ -160,3 +163,9 @@ async function run() {
   }
   process.exit();
 })();
+
+
+/** Pause exectuion for nn miliseconds */
+export function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms || 1000))
+}
