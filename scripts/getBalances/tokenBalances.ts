@@ -8,7 +8,7 @@ dotenv.config();
 global.fetch = require("node-fetch");
 global.WebSocket = require("ws");
 
-const { DFUSE_GRAPHQL_URL, DFUSE_KEY, TOKEN_CONTRACT } = process.env;
+const { DFUSE_GRAPHQL_URL, DFUSE_KEY, DEFAULT_TOKEN_CONTRACT } = process.env;
 
 const client = createDfuseClient({
   apiKey: DFUSE_KEY,
@@ -40,7 +40,7 @@ const operation = `query($contract: String!, $symbol:String!, $limit: Uint32, $c
 const { argv } = process;
 
 const variableConst = {
-  contract: TOKEN_CONTRACT,
+  contract: argv[3] || DEFAULT_TOKEN_CONTRACT,
   symbol: argv[2],
   //   opts: ["EOS_INCLUDE_STAKED"],
   limit: 100,
