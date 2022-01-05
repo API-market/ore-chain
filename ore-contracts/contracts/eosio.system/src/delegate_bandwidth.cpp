@@ -6,7 +6,7 @@
 #include <eosio/transaction.hpp>
 
 #include <eosio.system/eosio.system.hpp>
-#include <eosio.token/eosio.token.hpp>
+#include <eosio.token.hpp>
 
 #include "name_bidding.cpp"
 // Unfortunately, this is needed until CDT fixes the duplicate symbol error with eosio::send_deferred

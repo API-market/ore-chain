@@ -7,7 +7,7 @@
 #include <eosio/singleton.hpp>
 
 #include <eosio.system/eosio.system.hpp>
-#include <eosio.token/eosio.token.hpp>
+#include <eosio.token.hpp>
 
 #include <algorithm>
 #include <cmath>

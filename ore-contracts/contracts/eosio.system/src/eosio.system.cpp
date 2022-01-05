@@ -1,6 +1,6 @@
 #include <eosio.system/eosio.system.hpp>
 #include <eosio.system/ore.system.hpp>
-#include <eosio.token/eosio.token.hpp>
+#include <eosio.token.hpp>
 #include <eosio/crypto.hpp>
 #include <eosio/dispatcher.hpp>
 

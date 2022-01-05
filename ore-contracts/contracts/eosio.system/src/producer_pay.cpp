@@ -1,5 +1,5 @@
 #include <eosio.system/eosio.system.hpp>
-#include <eosio.token/eosio.token.hpp>
+#include <eosio.token.hpp>
 
 #include <cmath>
 
