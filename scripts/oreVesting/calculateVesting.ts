@@ -31,8 +31,8 @@ async function main() {
   });
   const {vesting} = rows[0] 
   console.log(vesting)
-  let totalLocked = 0
-  let totalUnlocked = 0
+  let originalAmountLocked = 0
+  let totalUnlockedAvailable = 0
   // For each Vesting index increase total locked and unlocked amounts to calculate total available amount in the end
   vesting.forEach( (vest: any) => {
     const {claimed, locked, start_time, end_time} = vest
@@ -44,15 +44,15 @@ async function main() {
     const unlockRatio = (now - start)/(end - start)
     console.log('lockRatio: ', unlockRatio)
     const unlocked = Number(lockedStr) * unlockRatio
-    const unlockedAvailabe = unlocked - Number(claimedStr)
-    totalUnlocked += unlockedAvailabe
-    totalLocked += Number(lockedStr)
+    const unlockedAvailable = unlocked - Number(claimedStr)
+    totalUnlockedAvailable += unlockedAvailable
+    originalAmountLocked += Number(lockedStr)
   })
-  console.log('totalLocked', totalLocked)
-  console.log('totalUnlocked', totalUnlocked)
-  console.log('balance', Number(balanceStr))
-  const totalAvailable = Number(balanceStr) - totalLocked + totalUnlocked
-  console.log(totalAvailable)
+  console.log('originalAmountLocked:', originalAmountLocked)
+  console.log('totalUnlockedAvailable:', totalUnlockedAvailable)
+  console.log('balance:', Number(balanceStr))
+  const totalAvailable = Math.max(0, Number(balanceStr) - originalAmountLocked + totalUnlockedAvailable)
+  console.log('totalAvailable:', totalAvailable)
 }
 
 (async () => {
