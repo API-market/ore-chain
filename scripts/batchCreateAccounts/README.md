@@ -13,4 +13,4 @@ Create Accounts:
 
     - Populate createAccounts-input.txt (see example)
     - Provide command line: url, newAccountOwnerPublicKey, newAccountActivePublicKey
-    - python3 createAccounts.py "https://ore.openrights.exchange" EOS5... EOS5..
+    - python3 createAccounts.py "https://ore.openrights.exchange"
