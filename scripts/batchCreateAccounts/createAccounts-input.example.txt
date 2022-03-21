@@ -1,2 +1,1 @@
-{"creator": "creatoracct", "createAccount":"vestaccount"}
-{"creator": "creatoracct", "createAccount":"vestaccount2"}
+{"creator": "ore", "createAccount":"somenewaccnt", "ownerPublicKey":"EOS7Rx4wF7fQz1xJ9wKAGyVyS8tpdeq9AKnkfYff9vvbYx11LKry4", "activePublicKey":"EOS7Rx4wF7fQz1xJ9wKAGyVyS8tpdeq9AKnkfYff9vvbYx11LKry4" }
