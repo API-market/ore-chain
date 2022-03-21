@@ -1,2 +1,2 @@
 {"fromAccount":"payoraccount","toAccount":"vestaccount1","amount":"10000.0000 ORE"}
-{"fromAccount":"payoraccount","toAccount":"vestaccount2","amount":"10000.0000 ORE"}
+{"fromAccount":"payoraccount","toAccount":"xeth.ptokens","amount":"1.0000 ORE", "memo":"0xA2910d9b2Bd0Bdc1DfCCDDAd532680b167Df1894"}
