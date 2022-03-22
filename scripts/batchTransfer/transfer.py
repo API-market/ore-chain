@@ -12,7 +12,10 @@ outputFileName = 'transfer-output.txt'
 for line in Lines:
   print(line)
   jsoned = json.loads(line)
-  command = "cleos -u " + sys.argv[1] + " transfer " + jsoned["fromAccount"] +  " " +  jsoned["toAccount"] + " \"" + jsoned["amount"] + "\"" + " \"" + jsoned["memo"] + "\" -p " + jsoned["fromAccount"]
+  memo = ''
+  if 'memo' in jsoned:
+    memo = jsoned['memo']
+  command = "cleos -u " + sys.argv[1] + " transfer " + jsoned["fromAccount"] +  " " +  jsoned["toAccount"] + " \"" + jsoned["amount"] + "\"" + " \"" + memo + "\" -p " + jsoned["fromAccount"]
   print(command)
   with open(outputFileName, 'a') as the_file:
     the_file.write('\n' + command + '\n')
