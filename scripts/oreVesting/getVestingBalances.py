@@ -12,15 +12,17 @@ total_arr = [['account','total_claimed','total_locked']]
 more = True
 next_key = ''
 
+def get_value(bal: str):
+    return bal.replace(' ORE','')
 
 while more:
     table = ce.get_table('eosio.token','eosio.token','vesting',limit=20, lower_bound=next_key)
     for row in table['rows']: 
-        line = [row['account'],row['total_locked'],row['total_claimed']]
+        line = [row['account'],get_value(row['total_locked']),get_value(row['total_claimed'])]
         print(line)
         total_arr.append(line)
         for v in row['vesting']:
-            detail = [row['account'],v['claimed'],v['locked'],v['start_time'],v['end_time']]
+            detail = [row['account'],get_value(v['claimed']),get_value(v['locked']),v['start_time'],v['end_time']]
             print(detail)
             detailed_arr.append(detail)
     next_key = table['next_key']
