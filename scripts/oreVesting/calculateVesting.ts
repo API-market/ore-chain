@@ -41,7 +41,14 @@ async function main() {
     const start = Math.round((Date.parse(start_time) / 1000))
     const end = Math.round((Date.parse(end_time) / 1000))
     const now = Math.round((Date.now() / 1000))
-    const unlockRatio = (now - start)/(end - start)
+    // assume now < start which means no tokens are unlocked
+    var unlockRatio = 0
+    if (now >= start && now <= end) {
+      unlockRatio = (now - start)/(end - start)
+    } else if(now > end) {
+      // all the tokens are unlocked
+      unlockRatio = 1
+    }
     console.log('lockRatio: ', unlockRatio)
     const unlocked = Number(lockedStr) * unlockRatio
     const unlockedAvailable = unlocked - Number(claimedStr)
