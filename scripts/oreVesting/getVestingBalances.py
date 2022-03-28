@@ -7,7 +7,7 @@ detailed_csv = 'detailed_vesting.csv'
 detailed_arr = [['account','claimed','locked','start','end']]
 
 total_csv = 'totals_vesting.csv'
-total_arr = [['account','total_claimed','total_locked']]
+total_arr = [['account','total_locked','total_claimed']]
 
 more = True
 next_key = ''
