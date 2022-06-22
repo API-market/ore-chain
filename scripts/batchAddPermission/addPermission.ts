@@ -65,7 +65,7 @@ async function run() {
 
     const activeKey = activePermission.required_auth.keys[0].key;
 
-    console.log("key: ", activeKey);
+    console.log(`accountName: ${accountName} accountNameToLink: ${accountNameToLink} permission: ${permission} activePublicKey: ${activeKey}`);
 
     let actions: any = [
       firstAuthAction,
