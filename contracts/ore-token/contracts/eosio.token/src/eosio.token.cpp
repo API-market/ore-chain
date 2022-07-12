@@ -204,6 +204,7 @@ namespace eosio
             info.vesting.insert(pos, vinfo);
          });
       } else {
+         check(from.balance.amount >= quantity.amount, "not enough tokens to vest");
          vtable.emplace( get_self(), [&](vesting_acct_info& info){
             // info.account = acct;
             info.account = acct;
@@ -253,7 +254,12 @@ namespace eosio
             // check(liquid_balance >= 0, "negative balance after transfer. should not happen");
             // calc vested amount across all schedules
             while(vp != vacct->vesting.end() && vp->start_time <= ct) {
-               vested += vp->locked.amount * double(ct.sec_since_epoch() - vp->start_time.sec_since_epoch()) / (vp->end_time.sec_since_epoch() - vp->start_time.sec_since_epoch());
+               if(vp->end_time <= ct || vp->locked.amount == vp->claimed.amount){
+                  // amount is fully vested
+                  vested += vp->locked.amount;
+               } else {
+                  vested += vp->locked.amount * double(ct.sec_since_epoch() - vp->start_time.sec_since_epoch()) / (vp->end_time.sec_since_epoch() - vp->start_time.sec_since_epoch());
+               }
                claimed += vp->claimed.amount;
                ++vp;
             }
